@@ -1,12 +1,10 @@
 require 'socket'
-require 'logger'
 
 class EventedEchoServer
-  DEBUG = ENV['DEBUG']
+  include DebugLogger
   MESSAGE_MAXLEN = 10000
   
-  def initialize(logger: Logger.new($stdout), port:)
-    @logger = logger
+  def initialize(port:)
     @to_read = []
     @to_write = []
     @messages = {}
@@ -40,13 +38,7 @@ class EventedEchoServer
   end
 
   private 
-  attr_reader :logger, :to_read, :to_write, :messages, :server
-
-  def log(msg)
-    return unless DEBUG
-
-    logger.add Logger::INFO, msg
-  end
+  attr_reader :to_read, :to_write, :messages, :server
 
   def accept_new_client(socket)
     begin

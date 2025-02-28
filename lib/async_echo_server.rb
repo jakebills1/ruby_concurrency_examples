@@ -3,20 +3,21 @@ require 'async'
 require 'io/endpoint/host_endpoint'
 
 class AsyncEchoServer
+  include DebugLogger
   def initialize(port:)
     @server = IO::Endpoint.tcp("localhost", port)
     trap('INT') { exit(1) }
-    puts Process.pid
-    puts Thread.current.inspect
+    log Process.pid
+    log Thread.current.inspect
   end
 
   def run
     Async do
       server.accept do |client|
-        puts "in accept block."
-        puts "pid = #{Process.pid}"
-        puts "thread = #{Thread.current.inspect}"
-        puts "fiber = #{Fiber.current}"
+        log "in accept block."
+        log "pid = #{Process.pid}"
+        log "thread = #{Thread.current.inspect}"
+        log "fiber = #{Fiber.current}"
         while message = read_from_client(client)
           write_to_client(client, message)
         end

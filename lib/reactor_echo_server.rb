@@ -1,14 +1,12 @@
 # frozen_string_literal: true
-
 require 'socket'
-require 'logger'
 require 'nio'
 
 class ReactorEchoServer
-  DEBUG = ENV['DEBUG']
+  include DebugLogger
   MESSAGE_MAXLEN = 10000
 
-  def initialize(logger: Logger.new($stdout), port:)
+  def initialize(port:)
     trap(:INT) { exit }
     @logger = logger
     @server = TCPServer.new port
@@ -27,13 +25,7 @@ class ReactorEchoServer
   end
 
   private
-  attr_reader :logger, :server, :selector
-
-  def log(msg)
-    return unless DEBUG
-
-    logger.add Logger::DEBUG, msg
-  end
+  attr_reader :server, :selector
 
   def accept_new_client
     client = server.accept

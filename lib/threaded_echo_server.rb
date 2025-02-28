@@ -1,6 +1,8 @@
 require 'socket'
 
 class ThreadedEchoServer
+  extend DebugLogger
+
   def self.run(port:)
     server = TCPServer.new port
     # trap interrupt signal
@@ -9,7 +11,7 @@ class ThreadedEchoServer
     loop do
       # blocking call to accept to get new connection
       client = server.accept
-      puts "accepted client"
+      log "accepted client"
 
       # spawn thread per connection 
       Thread.new(client) do

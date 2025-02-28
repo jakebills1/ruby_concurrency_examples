@@ -1,6 +1,9 @@
 require 'socket'
+require_relative './debug_logger'
 
 class SerialEchoServer
+  extend DebugLogger
+
   def self.run(port:)
     server = TCPServer.new port
     # trap interrupt signal
@@ -9,7 +12,7 @@ class SerialEchoServer
     loop do
       # blocking call to accept to get new connection
       @client = server.accept
-      puts "accepted client"
+      log "accepted client"
 
       # blocking read from client
       while echo = @client.gets
@@ -17,7 +20,7 @@ class SerialEchoServer
         @client.puts echo 
       end
       @client.close
-      puts 'client left'
+      log 'client left'
     end
     server.close
   end
