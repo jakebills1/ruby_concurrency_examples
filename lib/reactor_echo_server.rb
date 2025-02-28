@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'socket'
 require 'nio'
+require_relative './debug_logger'
 
 class ReactorEchoServer
   include DebugLogger

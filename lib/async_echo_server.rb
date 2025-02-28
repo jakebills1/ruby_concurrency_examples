@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'async'
 require 'io/endpoint/host_endpoint'
+require_relative './debug_logger'
 
 class AsyncEchoServer
   include DebugLogger

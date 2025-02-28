@@ -3,7 +3,7 @@
 ## Usage
 ```shell
 $ bundle
-$ ruby server.rb # update file to test different server designs
+$ ruby echo_server.rb # update file to test different server designs
 # in a separate terminal:
-$ ruby client.rb
+$ ruby echo_client.rb
 ```

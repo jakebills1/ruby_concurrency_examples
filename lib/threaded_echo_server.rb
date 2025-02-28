@@ -1,4 +1,5 @@
 require 'socket'
+require_relative './debug_logger'
 
 class ThreadedEchoServer
   extend DebugLogger
